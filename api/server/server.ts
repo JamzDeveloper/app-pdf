@@ -1,6 +1,6 @@
 import express,{Application} from 'express';
 import cors from 'cors';
-import login from '../routes/login';
+import login from '../routes/auth';
 import persons from '../routes/persona'
 import users from '../routes/users';
 

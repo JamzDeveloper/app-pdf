@@ -35,18 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
-exports.getLogin = void 0;
+exports.login = void 0;
+var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var pool = require("../mysql/database");
-var getLogin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, dni, clave, usuario, id_persona, persona;
+var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, dni, clave, usuario, validPassword, id_persona, persona;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.query, dni = _a.dni, clave = _a.clave;
-                return [4 /*yield*/, pool.query("SELECT *FROM usuario where dni=" + dni + " AND clave=\"" + clave + "\"")];
+                _a = req.body, dni = _a.dni, clave = _a.clave;
+                if (!dni || !clave) {
+                    return [2 /*return*/, res.status(409).json({ msg: "faltan datos" })];
+                }
+                return [4 /*yield*/, pool.query("SELECT *FROM usuario where dni=" + dni)];
             case 1:
                 usuario = _b.sent();
+                console.log(usuario);
+                validPassword = bcryptjs_1["default"].compareSync(clave, usuario[0].clave);
+                if (!validPassword) {
+                    return [2 /*return*/, res.json({
+                            msg: "Usuario /password no son correctos - password"
+                        })];
+                }
                 id_persona = usuario[0].id_persona;
                 return [4 /*yield*/, pool.query("SELECT *FROM persona where id_persona=\"" + id_persona + "\"")];
             case 2:
@@ -56,5 +70,5 @@ var getLogin = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
         }
     });
 }); };
-exports.getLogin = getLogin;
+exports.login = login;
 //# sourceMappingURL=login.js.map

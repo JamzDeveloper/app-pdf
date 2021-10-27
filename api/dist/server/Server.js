@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
-var login_1 = __importDefault(require("../routes/login"));
+var auth_1 = __importDefault(require("../routes/auth"));
 var persona_1 = __importDefault(require("../routes/persona"));
 var users_1 = __importDefault(require("../routes/users"));
 var Server = /** @class */ (function () {
@@ -26,7 +26,7 @@ var Server = /** @class */ (function () {
         this.app.use(express_1["default"].static("public"));
     };
     Server.prototype.routes = function () {
-        this.app.use(this.apiPaths.login, login_1["default"]);
+        this.app.use(this.apiPaths.login, auth_1["default"]);
         this.app.use(this.apiPaths.persons, persona_1["default"]);
         this.app.use(this.apiPaths.users, users_1["default"]);
     };
