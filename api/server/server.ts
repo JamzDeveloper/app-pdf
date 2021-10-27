@@ -3,14 +3,16 @@ import cors from 'cors';
 import login from '../routes/auth';
 import persons from '../routes/persona'
 import users from '../routes/users';
-
+import investigation from '../routes/investigation' 
 class Server {
     private app: Application;
     private port: string;
     private apiPaths = {
         login: "/api/login",
         persons: "/api/personas",
-        users:"/api/usuarios"
+        users:"/api/usuarios",
+        investigation:"/api/investigation",
+
     };
     
     constructor(){
@@ -31,6 +33,7 @@ class Server {
         this.app.use(this.apiPaths.login, login);
         this.app.use(this.apiPaths.persons, persons);
         this.app.use(this.apiPaths.users, users);
+        this.app.use(this.apiPaths.investigation,investigation );
 
       }
     

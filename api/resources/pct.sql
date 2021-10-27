@@ -36,7 +36,7 @@ CREATE TABLE archivo (
 CREATE TABLE investigacion(
   id_investigacion INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT, 
   id_investigador INTEGER NOT NULL,
-  id_archivo INTEGER NOT NULL,
+ url_archivo VARCHAR(100) NOT NULL,
   titulo VARCHAR(60) NOT NULL,
   descripcion VARCHAR(250) NOT NULL,
   fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

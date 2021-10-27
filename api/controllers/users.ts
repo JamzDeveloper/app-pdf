@@ -155,3 +155,51 @@ export const postUser = async (req: Request, res: Response) => {
     console.log(err);
   }
 };
+export const getInvestigators = async (req: Request, res: Response) => {
+  try {
+    const investigators = await pool.query(`select *
+          from investigador as inv inner join persona as  pers
+         on inv.id_persona=pers.id_persona;
+         `);
+
+    res.json({
+      investigadores: investigators,
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: "error en la peticion",
+    });
+  }
+};
+export const getAdvisors = async (req: Request, res: Response) => {
+  try {
+    const advisors = await pool.query(`select * from asesor inner join persona 
+    on asesor.id_persona=persona.id_persona;
+    `);
+
+    res.json({
+      asesores: advisors,
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: "error en la peticion",
+    });
+  }
+};
+
+export const getAdmin = async (req: Request, res: Response) => {
+  try {
+    const admin = await pool.query(` select * from usuario  as us
+    inner join tipo_cuenta  as tc
+    on us.id_tipocuenta = tc.id_tipocuenta
+    inner join persona as p
+    on us.id_persona = p.id_persona where tc.nombre= "ADMIN";`);
+    res.json({
+      administradores: admin,
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: "error en la peticion",
+    });
+  }
+};

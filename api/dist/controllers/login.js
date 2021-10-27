@@ -57,7 +57,7 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 console.log(usuario);
                 validPassword = bcryptjs_1["default"].compareSync(clave, usuario[0].clave);
                 if (!validPassword) {
-                    return [2 /*return*/, res.json({
+                    return [2 /*return*/, res.status(400).json({
                             msg: "Usuario /password no son correctos - password"
                         })];
                 }

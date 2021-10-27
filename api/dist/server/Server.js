@@ -8,12 +8,14 @@ var cors_1 = __importDefault(require("cors"));
 var auth_1 = __importDefault(require("../routes/auth"));
 var persona_1 = __importDefault(require("../routes/persona"));
 var users_1 = __importDefault(require("../routes/users"));
+var investigation_1 = __importDefault(require("../routes/investigation"));
 var Server = /** @class */ (function () {
     function Server() {
         this.apiPaths = {
             login: "/api/login",
             persons: "/api/personas",
-            users: "/api/usuarios"
+            users: "/api/usuarios",
+            investigation: "/api/investigation"
         };
         this.app = (0, express_1["default"])();
         this.port = process.env.PORT || '8000';
@@ -29,6 +31,7 @@ var Server = /** @class */ (function () {
         this.app.use(this.apiPaths.login, auth_1["default"]);
         this.app.use(this.apiPaths.persons, persona_1["default"]);
         this.app.use(this.apiPaths.users, users_1["default"]);
+        this.app.use(this.apiPaths.investigation, investigation_1["default"]);
     };
     Server.prototype.listen = function () {
         var _this = this;

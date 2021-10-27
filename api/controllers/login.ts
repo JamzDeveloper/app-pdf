@@ -10,12 +10,12 @@ export const login = async (req: Request, res: Response) => {
 
   const usuario = await pool.query(`SELECT *FROM usuario where dni=${dni}`);
   console.log(usuario);
- const validPassword = bcryptjs.compareSync(clave, usuario[0].clave);
- if (!validPassword) {
-  return res.json({
-    msg: "Usuario /password no son correctos - password",
-  });
-}
+  const validPassword = bcryptjs.compareSync(clave, usuario[0].clave);
+  if (!validPassword) {
+    return res.status(400).json({
+      msg: "Usuario /password no son correctos - password",
+    });
+  }
 
   const { id_persona } = usuario[0];
   const persona = await pool.query(

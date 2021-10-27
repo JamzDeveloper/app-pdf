@@ -7,6 +7,9 @@ var db_validators_1 = require("../helpers/db-validators");
 var validate_fields_1 = require("../middlewares/validate-fields");
 var router = (0, express_1.Router)();
 router.get("/", users_1.getUsers);
+router.get("/investigadores", users_1.getInvestigators);
+router.get("/asesores", users_1.getAdvisors);
+router.get("/admin", users_1.getAdmin);
 //router.get("/:id");/*
 router.post("/", [
     (0, express_validator_1.check)("tipo_cuenta").custom(db_validators_1.existsRole),

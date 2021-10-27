@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.postUser = exports.getUsers = void 0;
+exports.getAdmin = exports.getAdvisors = exports.getInvestigators = exports.postUser = exports.getUsers = void 0;
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var pool = require("../mysql/database");
 var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -192,4 +192,76 @@ var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.postUser = postUser;
+var getInvestigators = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var investigators, e_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, pool.query("select *\n          from investigador as inv inner join persona as  pers\n         on inv.id_persona=pers.id_persona;\n         ")];
+            case 1:
+                investigators = _a.sent();
+                res.json({
+                    investigadores: investigators
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                e_2 = _a.sent();
+                res.status(500).json({
+                    msg: "error en la peticion"
+                });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getInvestigators = getInvestigators;
+var getAdvisors = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var advisors, e_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, pool.query("select * from asesor inner join persona \n    on asesor.id_persona=persona.id_persona;\n    ")];
+            case 1:
+                advisors = _a.sent();
+                res.json({
+                    asesores: advisors
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                e_3 = _a.sent();
+                res.status(500).json({
+                    msg: "error en la peticion"
+                });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAdvisors = getAdvisors;
+var getAdmin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var admin, e_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, pool.query(" select * from usuario  as us\n    inner join tipo_cuenta  as tc\n    on us.id_tipocuenta = tc.id_tipocuenta\n    inner join persona as p\n    on us.id_persona = p.id_persona where tc.nombre= \"ADMIN\";")];
+            case 1:
+                admin = _a.sent();
+                res.json({
+                    administradores: admin
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                e_4 = _a.sent();
+                res.status(500).json({
+                    msg: "error en la peticion"
+                });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAdmin = getAdmin;
 //# sourceMappingURL=users.js.map

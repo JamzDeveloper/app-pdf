@@ -1,12 +1,23 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { getUsers, postUser } from "../controllers/users";
+import {
+  getUsers,
+  postUser,
+  getInvestigators,
+  getAdvisors,
+  getAdmin,
+} from "../controllers/users";
+
 import { existsPerson, existsRole } from "../helpers/db-validators";
 import { validateFields } from "../middlewares/validate-fields";
 
 const router = Router();
 
 router.get("/", getUsers);
+router.get("/investigadores", getInvestigators);
+router.get("/asesores", getAdvisors);
+router.get("/admin", getAdmin);
+
 //router.get("/:id");/*
 router.post(
   "/",
