@@ -8,11 +8,20 @@ var multer_1 = __importDefault(require("multer"));
 var diskstorage = multer_1["default"].diskStorage({
     destination: path_1["default"].join(__dirname, "../documents"),
     filename: function (req, file, cb) {
+        console.log(file);
         cb(null, Date.now() + "-document-" + file.originalname);
         req.body.document = Date.now() + "-document-" + file.originalname;
     }
 });
 var fileUpload = (0, multer_1["default"])({
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype === "application/pdf") {
+            cb(null, true);
+        }
+        else {
+            cb(null, false);
+        }
+    },
     storage: diskstorage
 }).single("documents");
 exports["default"] = fileUpload;

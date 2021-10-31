@@ -16,13 +16,19 @@ export const postInvestigation = async (req: Request, res: Response) => {
   // console.log(req.file?.mimetype);
   // console.log(req.file?.originalname);
   // console.log(req.file?.filename);
+
   try {
+    if (!req.file) {
+      return res.status(400).json({
+        msg: "Solo se aceptan archivos pdf",
+      });
+    }
     url_archivo = req.body.document;
     //console.log("url_archivo:", url_archivo);
     await fs.readFileSync(
       path.join(__dirname, "../documents/" + req.file?.filename)
     );
-   // console.log(__dirname, "../documents/" + req.file?.filename);
+    // console.log(__dirname, "../documents/" + req.file?.filename);
 
     const newInvestigation = {
       id_investigador,

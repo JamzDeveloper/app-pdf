@@ -53,6 +53,11 @@ var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, v
                 _c.label = 1;
             case 1:
                 _c.trys.push([1, 5, , 6]);
+                if (!req.file) {
+                    return [2 /*return*/, res.status(400).json({
+                            msg: "Solo se aceptan archivos pdf"
+                        })];
+                }
                 url_archivo = req.body.document;
                 //console.log("url_archivo:", url_archivo);
                 return [4 /*yield*/, fs_1["default"].readFileSync(path_1["default"].join(__dirname, "../documents/" + ((_b = req.file) === null || _b === void 0 ? void 0 : _b.filename)))];
