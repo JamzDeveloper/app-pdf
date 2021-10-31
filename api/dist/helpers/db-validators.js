@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.existsRole = exports.existsPerson = void 0;
+exports.existsAsesor = exports.existsInvestigator = exports.existsRole = exports.existsPerson = void 0;
 var pool = require("../mysql/database");
 var existsPerson = function (dni) { return __awaiter(void 0, void 0, void 0, function () {
     var dataPerson;
@@ -72,4 +72,34 @@ var existsRole = function (tipo_usuario) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.existsRole = existsRole;
+var existsInvestigator = function (idInvestigador) { return __awaiter(void 0, void 0, void 0, function () {
+    var dataInvestigator;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, pool.query("SELECT * FROM investigador WHERE id_investigador=" + idInvestigador)];
+            case 1:
+                dataInvestigator = _a.sent();
+                if ((dataInvestigator === null || dataInvestigator === void 0 ? void 0 : dataInvestigator.length) === 0) {
+                    throw new Error("El investigador no existe");
+                }
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.existsInvestigator = existsInvestigator;
+var existsAsesor = function (idAsesor) { return __awaiter(void 0, void 0, void 0, function () {
+    var dataAsesor;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, pool.query("SELECT * FROM asesor WHERE id_asesor=" + idAsesor)];
+            case 1:
+                dataAsesor = _a.sent();
+                if ((dataAsesor === null || dataAsesor === void 0 ? void 0 : dataAsesor.length) === 0) {
+                    throw new Error("El asesor no existe");
+                }
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.existsAsesor = existsAsesor;
 //# sourceMappingURL=db-validators.js.map

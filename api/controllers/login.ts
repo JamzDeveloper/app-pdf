@@ -21,5 +21,5 @@ export const login = async (req: Request, res: Response) => {
   const persona = await pool.query(
     `SELECT *FROM persona where id_persona="${id_persona}"`
   );
-  res.json(persona);
+  res.json(persona[0]);
 };

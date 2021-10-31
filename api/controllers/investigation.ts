@@ -18,11 +18,11 @@ export const postInvestigation = async (req: Request, res: Response) => {
   // console.log(req.file?.filename);
   try {
     url_archivo = req.body.document;
-    console.log("url_archivo:", url_archivo);
+    //console.log("url_archivo:", url_archivo);
     await fs.readFileSync(
       path.join(__dirname, "../documents/" + req.file?.filename)
     );
-    console.log(__dirname, "../documents/" + req.file?.filename);
+   // console.log(__dirname, "../documents/" + req.file?.filename);
 
     const newInvestigation = {
       id_investigador,
@@ -34,7 +34,7 @@ export const postInvestigation = async (req: Request, res: Response) => {
     const investigacion = await pool.query("INSERT INTO investigacion set ?", [
       newInvestigation,
     ]);
-    console.log("jamz", investigacion.insertId);
+
     const newDetalleInvestigation = {
       id_investigacion: investigacion.insertId,
       id_asesor,

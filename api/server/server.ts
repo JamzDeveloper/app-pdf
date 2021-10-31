@@ -4,6 +4,7 @@ import login from '../routes/auth';
 import persons from '../routes/persona'
 import users from '../routes/users';
 import investigation from '../routes/investigation' 
+import documents from '../routes/files'
 class Server {
     private app: Application;
     private port: string;
@@ -12,7 +13,7 @@ class Server {
         persons: "/api/personas",
         users:"/api/usuarios",
         investigation:"/api/investigation",
-
+        documents:"/api/file"
     };
     
     constructor(){
@@ -34,13 +35,16 @@ class Server {
         this.app.use(this.apiPaths.persons, persons);
         this.app.use(this.apiPaths.users, users);
         this.app.use(this.apiPaths.investigation,investigation );
-
+        this.app.use(this.apiPaths.documents, documents);
       }
     
-    listen(){
+  
+      listen(){
         this.app.listen(this.port, () => {
             console.log("Server runing in: "+this.port);
         })
+
     }
+
 }
 export default Server;

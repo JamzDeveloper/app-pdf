@@ -45,20 +45,20 @@ var fs_1 = __importDefault(require("fs"));
 var pool = require("../mysql/database");
 var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, id_investigador, url_archivo, titulo, descripcion, fecha_inicio, id_asesor, newInvestigation, investigacion, newDetalleInvestigation, detalleInvestigation, e_1;
-    var _b, _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    var _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 _a = req.body, id_investigador = _a.id_investigador, url_archivo = _a.url_archivo, titulo = _a.titulo, descripcion = _a.descripcion, fecha_inicio = _a.fecha_inicio, id_asesor = _a.id_asesor;
-                _d.label = 1;
+                _c.label = 1;
             case 1:
-                _d.trys.push([1, 5, , 6]);
+                _c.trys.push([1, 5, , 6]);
                 url_archivo = req.body.document;
-                console.log("url_archivo:", url_archivo);
+                //console.log("url_archivo:", url_archivo);
                 return [4 /*yield*/, fs_1["default"].readFileSync(path_1["default"].join(__dirname, "../documents/" + ((_b = req.file) === null || _b === void 0 ? void 0 : _b.filename)))];
             case 2:
-                _d.sent();
-                console.log(__dirname, "../documents/" + ((_c = req.file) === null || _c === void 0 ? void 0 : _c.filename));
+                //console.log("url_archivo:", url_archivo);
+                _c.sent();
                 newInvestigation = {
                     id_investigador: id_investigador,
                     url_archivo: url_archivo,
@@ -70,8 +70,7 @@ var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, v
                         newInvestigation,
                     ])];
             case 3:
-                investigacion = _d.sent();
-                console.log("jamz", investigacion.insertId);
+                investigacion = _c.sent();
                 newDetalleInvestigation = {
                     id_investigacion: investigacion.insertId,
                     id_asesor: id_asesor,
@@ -80,11 +79,11 @@ var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, v
                 };
                 return [4 /*yield*/, pool.query("INSERT INTO detalle_investigacion set ?", [newDetalleInvestigation])];
             case 4:
-                detalleInvestigation = _d.sent();
+                detalleInvestigation = _c.sent();
                 res.json({ investigacion: investigacion, detalleInvestigation: detalleInvestigation });
                 return [3 /*break*/, 6];
             case 5:
-                e_1 = _d.sent();
+                e_1 = _c.sent();
                 console.log(e_1);
                 res.status(500).json({ msg: "Error al crear investigacion" });
                 return [3 /*break*/, 6];

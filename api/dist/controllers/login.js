@@ -65,7 +65,7 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 return [4 /*yield*/, pool.query("SELECT *FROM persona where id_persona=\"" + id_persona + "\"")];
             case 2:
                 persona = _b.sent();
-                res.json(persona);
+                res.json(persona[0]);
                 return [2 /*return*/];
         }
     });

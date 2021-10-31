@@ -19,3 +19,19 @@ export const existsRole = async (tipo_usuario: string) => {
     throw new Error("El Rol no existe");
   }
 };
+export const existsInvestigator = async (idInvestigador: number) => {
+  const dataInvestigator = await pool.query(
+    `SELECT * FROM investigador WHERE id_investigador=${idInvestigador}`
+  );
+  if (dataInvestigator?.length === 0) {
+    throw new Error("El investigador no existe");
+  }
+};
+export const existsAsesor = async (idAsesor: number) => {
+  const dataAsesor = await pool.query(
+    `SELECT * FROM asesor WHERE id_asesor=${idAsesor}`
+  );
+  if (dataAsesor?.length === 0) {
+    throw new Error("El asesor no existe");
+  }
+};

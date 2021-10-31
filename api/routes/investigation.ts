@@ -1,18 +1,30 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { existsPerson, existsRole } from "../helpers/db-validators";
+import { existsInvestigator, existsAsesor } from "../helpers/db-validators";
 import { validateFields } from "../middlewares/validate-fields";
-import fileUpload from "../middlewares/file-multer"
+import fileUpload from "../middlewares/file-multer";
 import { postInvestigation } from "../controllers/investigation";
 
 const router = Router();
 
-router.post("/",fileUpload,postInvestigation);
+router.post(
+  "/",
+  fileUpload,
+  [
+    check("id_investigador", "El id del investigador es obligatorio").custom(
+      existsInvestigator
+    ),
+    check("titulo", "Se requiere un titulo").not().isEmpty(),
+    check("id_asesor", "El id del asesor es obligatorio").custom(existsAsesor),
+    validateFields,
+  ],
+  postInvestigation
+);
 
 export default router;
-/* id_investigador,
+/* 
     url_archivo,
     titulo,
     descripcion,
     fecha_inicio,
-    id_asesor,*/
+  */
