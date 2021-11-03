@@ -12,6 +12,7 @@ export const postInvestigation = async (req: Request, res: Response) => {
     fecha_inicio,
     id_asesor,
   } = req.body;
+
   // console.log("documento:", req.body.document);
   // console.log(req.file?.mimetype);
   // console.log(req.file?.originalname);
@@ -56,5 +57,17 @@ export const postInvestigation = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: "Error al crear investigacion" });
+  }
+};
+
+export const getInvestigations = async (req: Request, res: Response) => {
+  try {
+    const investigations = await pool.query(
+      "SELECT * FROM investigacion INNER JOIN detalle_investigacion ON investigacion.id_investigacion = detalle_investigacion.id_investigacion"
+    );
+    res.json(investigations);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: "Error al listar investigaciones" });
   }
 };

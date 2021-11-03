@@ -21,6 +21,10 @@ router.post(
   postInvestigation
 );
 
+router.get("/", (req, res) => {
+  res.send("Investigaciones");
+});
+//router.put("/",  fileUpload,)
 export default router;
 /* 
     url_archivo,

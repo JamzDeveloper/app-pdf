@@ -161,8 +161,9 @@ export const getInvestigators = async (req: Request, res: Response) => {
           from investigador as inv inner join persona as  pers
          on inv.id_persona=pers.id_persona;
          `);
-
+    console.log(investigators);
     res.json({
+      rol: "Investigador",
       investigadores: investigators,
     });
   } catch (e) {
@@ -178,6 +179,7 @@ export const getAdvisors = async (req: Request, res: Response) => {
     `);
 
     res.json({
+      rol: "Asesor",
       asesores: advisors,
     });
   } catch (e) {
@@ -195,6 +197,7 @@ export const getAdmin = async (req: Request, res: Response) => {
     inner join persona as p
     on us.id_persona = p.id_persona where tc.nombre= "ADMIN";`);
     res.json({
+      rol: "Administrador",
       administradores: admin,
     });
   } catch (e) {

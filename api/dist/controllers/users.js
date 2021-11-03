@@ -201,7 +201,9 @@ var getInvestigators = function (req, res) { return __awaiter(void 0, void 0, vo
                 return [4 /*yield*/, pool.query("select *\n          from investigador as inv inner join persona as  pers\n         on inv.id_persona=pers.id_persona;\n         ")];
             case 1:
                 investigators = _a.sent();
+                console.log(investigators);
                 res.json({
+                    rol: "Investigador",
                     investigadores: investigators
                 });
                 return [3 /*break*/, 3];
@@ -226,6 +228,7 @@ var getAdvisors = function (req, res) { return __awaiter(void 0, void 0, void 0,
             case 1:
                 advisors = _a.sent();
                 res.json({
+                    rol: "Asesor",
                     asesores: advisors
                 });
                 return [3 /*break*/, 3];
@@ -250,6 +253,7 @@ var getAdmin = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
             case 1:
                 admin = _a.sent();
                 res.json({
+                    rol: "Administrador",
                     administradores: admin
                 });
                 return [3 /*break*/, 3];

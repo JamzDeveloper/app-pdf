@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.postInvestigation = void 0;
+exports.getInvestigations = exports.postInvestigation = void 0;
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
 var pool = require("../mysql/database");
@@ -97,4 +97,25 @@ var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, v
     });
 }); };
 exports.postInvestigation = postInvestigation;
+var getInvestigations = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var investigations, e_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, pool.query("SELECT * FROM investigacion INNER JOIN detalle_investigacion ON investigacion.id_investigacion = detalle_investigacion.id_investigacion")];
+            case 1:
+                investigations = _a.sent();
+                res.json(investigations);
+                return [3 /*break*/, 3];
+            case 2:
+                e_2 = _a.sent();
+                console.log(e_2);
+                res.status(500).json({ msg: "Error al listar investigaciones" });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getInvestigations = getInvestigations;
 //# sourceMappingURL=investigation.js.map
