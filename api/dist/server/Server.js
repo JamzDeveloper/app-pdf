@@ -16,7 +16,7 @@ var Server = /** @class */ (function () {
             login: "/api/login",
             persons: "/api/personas",
             users: "/api/usuarios",
-            investigation: "/api/investigation",
+            investigation: "/api/investigacion",
             documents: "/api/file"
         };
         this.app = (0, express_1["default"])();

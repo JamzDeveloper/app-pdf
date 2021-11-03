@@ -12,7 +12,7 @@ class Server {
         login: "/api/login",
         persons: "/api/personas",
         users:"/api/usuarios",
-        investigation:"/api/investigation",
+        investigation:"/api/investigacion",
         documents:"/api/file"
     };
     
