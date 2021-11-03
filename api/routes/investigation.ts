@@ -3,7 +3,10 @@ import { check } from "express-validator";
 import { existsInvestigator, existsAsesor } from "../helpers/db-validators";
 import { validateFields } from "../middlewares/validate-fields";
 import fileUpload from "../middlewares/file-multer";
-import { postInvestigation } from "../controllers/investigation";
+import {
+  postInvestigation,
+  getInvestigations,
+} from "../controllers/investigation";
 
 const router = Router();
 
@@ -21,9 +24,7 @@ router.post(
   postInvestigation
 );
 
-router.get("/", (req, res) => {
-  res.send("Investigaciones");
-});
+router.get("/", getInvestigations);
 //router.put("/",  fileUpload,)
 export default router;
 /* 

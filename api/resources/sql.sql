@@ -130,3 +130,4 @@ SELECT 	* from investigacion;
 
 select * from investigador;
 select * from asesor;
+

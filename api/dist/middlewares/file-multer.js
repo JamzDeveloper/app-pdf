@@ -8,7 +8,7 @@ var multer_1 = __importDefault(require("multer"));
 var diskstorage = multer_1["default"].diskStorage({
     destination: path_1["default"].join(__dirname, "../documents"),
     filename: function (req, file, cb) {
-        console.log(file);
+        //console.log(file);
         cb(null, Date.now() + "-document-" + file.originalname);
         req.body.document = Date.now() + "-document-" + file.originalname;
     }

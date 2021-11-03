@@ -61,11 +61,33 @@ export const postInvestigation = async (req: Request, res: Response) => {
 };
 
 export const getInvestigations = async (req: Request, res: Response) => {
+  const { id_investigador, id_asesor, id_admin } = req.query;
   try {
-    const investigations = await pool.query(
-      "SELECT * FROM investigacion INNER JOIN detalle_investigacion ON investigacion.id_investigacion = detalle_investigacion.id_investigacion"
-    );
-    res.json(investigations);
+    if (id_investigador) {
+      const investigacion = await pool.query(
+        `select inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.estado,dtinv.avance,ase.id_asesor,per.nombre,per.apellido,per.foto,ase.profesion,
+        per.correo from investigacion inv 
+        inner join detalle_investigacion as dtinv on 
+            inv.id_investigacion=dtinv.id_investigacion
+            inner join asesor as ase on dtinv.id_asesor= ase.id_asesor
+            inner join persona as per on ase.id_persona=per.id_persona
+             where id_investigador = ${id_investigador} `
+      );
+      res.json({ investigacion });
+    }
+    if (id_asesor) {
+      const investigacion = await pool.query(
+        `select  inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.estado,dtinv.avance,itg.id_investigador,
+        per.nombre,per.apellido,per.foto,itg.carrera,itg.facultad,
+            per.correo from investigacion inv 
+        inner join detalle_investigacion as dtinv on 
+            inv.id_investigacion = dtinv.id_investigacion
+            inner join investigador as itg on itg.id_investigador=  inv.id_investigador
+            inner join persona as per on itg.id_persona=per.id_persona
+            where id_asesor = ${id_asesor}`
+      );
+      res.json({ investigacion });
+    }
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: "Error al listar investigaciones" });

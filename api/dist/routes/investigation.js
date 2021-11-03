@@ -16,9 +16,7 @@ router.post("/", file_multer_1["default"], [
     (0, express_validator_1.check)("id_asesor", "El id del asesor es obligatorio").custom(db_validators_1.existsAsesor),
     validate_fields_1.validateFields,
 ], investigation_1.postInvestigation);
-router.get("/", function (req, res) {
-    res.send("Investigaciones");
-});
+router.get("/", investigation_1.getInvestigations);
 //router.put("/",  fileUpload,)
 exports["default"] = router;
 /*

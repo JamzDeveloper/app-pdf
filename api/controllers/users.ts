@@ -161,7 +161,7 @@ export const getInvestigators = async (req: Request, res: Response) => {
           from investigador as inv inner join persona as  pers
          on inv.id_persona=pers.id_persona;
          `);
-    console.log(investigators);
+ //   console.log(investigators);
     res.json({
       rol: "Investigador",
       investigadores: investigators,

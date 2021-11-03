@@ -201,7 +201,7 @@ var getInvestigators = function (req, res) { return __awaiter(void 0, void 0, vo
                 return [4 /*yield*/, pool.query("select *\n          from investigador as inv inner join persona as  pers\n         on inv.id_persona=pers.id_persona;\n         ")];
             case 1:
                 investigators = _a.sent();
-                console.log(investigators);
+                //   console.log(investigators);
                 res.json({
                     rol: "Investigador",
                     investigadores: investigators

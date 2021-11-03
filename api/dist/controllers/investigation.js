@@ -98,22 +98,34 @@ var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, v
 }); };
 exports.postInvestigation = postInvestigation;
 var getInvestigations = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var investigations, e_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, id_investigador, id_asesor, id_admin, investigacion, investigacion, e_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, pool.query("SELECT * FROM investigacion INNER JOIN detalle_investigacion ON investigacion.id_investigacion = detalle_investigacion.id_investigacion")];
+                _a = req.query, id_investigador = _a.id_investigador, id_asesor = _a.id_asesor, id_admin = _a.id_admin;
+                _b.label = 1;
             case 1:
-                investigations = _a.sent();
-                res.json(investigations);
-                return [3 /*break*/, 3];
+                _b.trys.push([1, 6, , 7]);
+                if (!id_investigador) return [3 /*break*/, 3];
+                return [4 /*yield*/, pool.query("select inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.estado,dtinv.avance,ase.id_asesor,per.nombre,per.apellido,per.foto,ase.profesion,\n        per.correo from investigacion inv \n        inner join detalle_investigacion as dtinv on \n            inv.id_investigacion=dtinv.id_investigacion\n            inner join asesor as ase on dtinv.id_asesor= ase.id_asesor\n            inner join persona as per on ase.id_persona=per.id_persona\n             where id_investigador = " + id_investigador + " ")];
             case 2:
-                e_2 = _a.sent();
+                investigacion = _b.sent();
+                res.json({ investigacion: investigacion });
+                _b.label = 3;
+            case 3:
+                if (!id_asesor) return [3 /*break*/, 5];
+                return [4 /*yield*/, pool.query("select  inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.estado,dtinv.avance,itg.id_investigador,\n        per.nombre,per.apellido,per.foto,itg.carrera,itg.facultad,\n            per.correo from investigacion inv \n        inner join detalle_investigacion as dtinv on \n            inv.id_investigacion = dtinv.id_investigacion\n            inner join investigador as itg on itg.id_investigador=  inv.id_investigador\n            inner join persona as per on itg.id_persona=per.id_persona\n            where id_asesor = " + id_asesor)];
+            case 4:
+                investigacion = _b.sent();
+                res.json({ investigacion: investigacion });
+                _b.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
+                e_2 = _b.sent();
                 console.log(e_2);
                 res.status(500).json({ msg: "Error al listar investigaciones" });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); };

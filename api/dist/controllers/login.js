@@ -43,18 +43,20 @@ exports.login = void 0;
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var pool = require("../mysql/database");
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, dni, clave, usuario, validPassword, id_persona, persona;
+    var _a, dni, clave, usuario, validPassword, id_persona, persona, rol, rol_1, e_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = req.body, dni = _a.dni, clave = _a.clave;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 8, , 9]);
                 if (!dni || !clave) {
                     return [2 /*return*/, res.status(409).json({ msg: "faltan datos" })];
                 }
                 return [4 /*yield*/, pool.query("SELECT *FROM usuario where dni=" + dni)];
-            case 1:
+            case 2:
                 usuario = _b.sent();
-                console.log(usuario);
                 validPassword = bcryptjs_1["default"].compareSync(clave, usuario[0].clave);
                 if (!validPassword) {
                     return [2 /*return*/, res.status(400).json({
@@ -63,10 +65,28 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 }
                 id_persona = usuario[0].id_persona;
                 return [4 /*yield*/, pool.query("SELECT *FROM persona where id_persona=\"" + id_persona + "\"")];
-            case 2:
+            case 3:
                 persona = _b.sent();
-                res.json(persona[0]);
-                return [2 /*return*/];
+                return [4 /*yield*/, pool.query("SELECT * from investigador where id_persona=" + persona[0].id_persona)];
+            case 4:
+                rol = _b.sent();
+                if (!(rol.length > 0)) return [3 /*break*/, 5];
+                res.json({ persona: persona, rol: rol });
+                return [3 /*break*/, 7];
+            case 5: return [4 /*yield*/, pool.query("SELECT * from asesor  where id_persona=" + persona[0].id_persona)];
+            case 6:
+                rol_1 = _b.sent();
+                if (rol_1.length > 0) {
+                    res.json({ persona: persona, rol: rol_1 });
+                }
+                _b.label = 7;
+            case 7: return [3 /*break*/, 9];
+            case 8:
+                e_1 = _b.sent();
+                console.log(e_1);
+                res.status(500).json({ msg: "No se pudo autentificar" });
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }); };
