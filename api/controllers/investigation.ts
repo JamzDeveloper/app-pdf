@@ -62,7 +62,7 @@ export const postInvestigation = async (req: Request, res: Response) => {
 
 export const getInvestigations = async (req: Request, res: Response) => {
   const { id_investigador, id_asesor, id_admin } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
   try {
     if (id_investigador) {
       const investigacion = await pool.query(
@@ -89,8 +89,25 @@ export const getInvestigations = async (req: Request, res: Response) => {
       );
       res.json({ investigacion });
     }
+    if (id_admin) {
+      const investigacion = await pool.query(
+        `SELECT INV.id_investigacion,INV.url_archivo, INV.titulo, DI.estado, DI.avance, CONCAT(P1.nombre," ",P1.apellido) as nombres_investigador,  CONCAT(P2.nombre," ",P2.apellido) as nombres_asesor
+        FROM investigacion INV 
+            INNER JOIN investigador I 
+              ON I.id_investigador = INV.id_investigador
+              INNER JOIN persona P1 
+                ON P1.id_persona = I.id_persona
+            INNER JOIN detalle_investigacion DI 
+                ON DI.id_investigacion = INV.id_investigacion 
+              INNER JOIN asesor A 
+                ON A.id_asesor = DI.id_asesor
+               INNER JOIN persona P2 
+                ON P2.id_persona = A.id_persona`
+      );
+      res.json({ investigacion });
+    }
   } catch (e) {
     console.log(e);
-    res.status(500).json({ msg: "Error al listar investigaciones" });
+    res.status(500).json({ msg: "Error " });
   }
 };

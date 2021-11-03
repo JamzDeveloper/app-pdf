@@ -98,15 +98,14 @@ var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, v
 }); };
 exports.postInvestigation = postInvestigation;
 var getInvestigations = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, id_investigador, id_asesor, id_admin, investigacion, investigacion, e_2;
+    var _a, id_investigador, id_asesor, id_admin, investigacion, investigacion, investigacion, e_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = req.body, id_investigador = _a.id_investigador, id_asesor = _a.id_asesor, id_admin = _a.id_admin;
-                console.log(req.body);
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 6, , 7]);
+                _b.trys.push([1, 8, , 9]);
                 if (!id_investigador) return [3 /*break*/, 3];
                 return [4 /*yield*/, pool.query("select inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.estado,dtinv.avance,ase.id_asesor,per.nombre,per.apellido,per.foto,ase.profesion,\n        per.correo from investigacion inv \n        inner join detalle_investigacion as dtinv on \n            inv.id_investigacion=dtinv.id_investigacion\n            inner join asesor as ase on dtinv.id_asesor= ase.id_asesor\n            inner join persona as per on ase.id_persona=per.id_persona\n             where id_investigador = " + id_investigador + " ")];
             case 2:
@@ -120,13 +119,20 @@ var getInvestigations = function (req, res) { return __awaiter(void 0, void 0, v
                 investigacion = _b.sent();
                 res.json({ investigacion: investigacion });
                 _b.label = 5;
-            case 5: return [3 /*break*/, 7];
+            case 5:
+                if (!id_admin) return [3 /*break*/, 7];
+                return [4 /*yield*/, pool.query("SELECT INV.id_investigacion,INV.url_archivo, INV.titulo, DI.estado, DI.avance, CONCAT(P1.nombre,\" \",P1.apellido) as nombres_investigador,  CONCAT(P2.nombre,\" \",P2.apellido) as nombres_asesor\n        FROM investigacion INV \n            INNER JOIN investigador I \n              ON I.id_investigador = INV.id_investigador\n              INNER JOIN persona P1 \n                ON P1.id_persona = I.id_persona\n            INNER JOIN detalle_investigacion DI \n                ON DI.id_investigacion = INV.id_investigacion \n              INNER JOIN asesor A \n                ON A.id_asesor = DI.id_asesor\n               INNER JOIN persona P2 \n                ON P2.id_persona = A.id_persona")];
             case 6:
+                investigacion = _b.sent();
+                res.json({ investigacion: investigacion });
+                _b.label = 7;
+            case 7: return [3 /*break*/, 9];
+            case 8:
                 e_2 = _b.sent();
                 console.log(e_2);
-                res.status(500).json({ msg: "Error al listar investigaciones" });
-                return [3 /*break*/, 7];
-            case 7: return [2 /*return*/];
+                res.status(500).json({ msg: "Error " });
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }); };
