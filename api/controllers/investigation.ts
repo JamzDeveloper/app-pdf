@@ -61,7 +61,8 @@ export const postInvestigation = async (req: Request, res: Response) => {
 };
 
 export const getInvestigations = async (req: Request, res: Response) => {
-  const { id_investigador, id_asesor, id_admin } = req.query;
+  const { id_investigador, id_asesor, id_admin } = req.body;
+  console.log(req.body);
   try {
     if (id_investigador) {
       const investigacion = await pool.query(

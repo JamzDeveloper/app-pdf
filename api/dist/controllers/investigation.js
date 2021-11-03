@@ -102,7 +102,8 @@ var getInvestigations = function (req, res) { return __awaiter(void 0, void 0, v
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.query, id_investigador = _a.id_investigador, id_asesor = _a.id_asesor, id_admin = _a.id_admin;
+                _a = req.body, id_investigador = _a.id_investigador, id_asesor = _a.id_asesor, id_admin = _a.id_admin;
+                console.log(req.body);
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 6, , 7]);
