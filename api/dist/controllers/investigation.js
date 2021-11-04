@@ -126,7 +126,9 @@ var getInvestigations = function (req, res) { return __awaiter(void 0, void 0, v
                 investigacion = _b.sent();
                 res.json({ investigacion: investigacion });
                 _b.label = 7;
-            case 7: return [3 /*break*/, 9];
+            case 7:
+                res.status(400).json({ msg: "se requiere datos" });
+                return [3 /*break*/, 9];
             case 8:
                 e_2 = _b.sent();
                 console.log(e_2);

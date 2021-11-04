@@ -106,6 +106,7 @@ export const getInvestigations = async (req: Request, res: Response) => {
       );
       res.json({ investigacion });
     }
+    res.status(400).json({msg:"se requiere datos"})
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: "Error " });
