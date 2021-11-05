@@ -61,7 +61,7 @@ export const postInvestigation = async (req: Request, res: Response) => {
 };
 
 export const getInvestigations = async (req: Request, res: Response) => {
-  const { id_investigador, id_asesor, id_admin } = req.body;
+  const { id_investigador, id_asesor, id_admin } = req.query;
   //console.log(req.body);
   try {
     if (id_investigador) {
@@ -74,7 +74,7 @@ export const getInvestigations = async (req: Request, res: Response) => {
             inner join persona as per on ase.id_persona=per.id_persona
              where id_investigador = ${id_investigador} `
       );
-      res.json({ investigacion });
+      return res.json({ investigacion });
     }
     if (id_asesor) {
       const investigacion = await pool.query(
@@ -87,7 +87,7 @@ export const getInvestigations = async (req: Request, res: Response) => {
             inner join persona as per on itg.id_persona=per.id_persona
             where id_asesor = ${id_asesor}`
       );
-      res.json({ investigacion });
+      return res.json({ investigacion });
     }
     if (id_admin) {
       const investigacion = await pool.query(
@@ -104,9 +104,9 @@ export const getInvestigations = async (req: Request, res: Response) => {
                INNER JOIN persona P2 
                 ON P2.id_persona = A.id_persona`
       );
-      res.json({ investigacion });
+      return res.json({ investigacion });
     }
-    res.status(400).json({msg:"se requiere datos"})
+    res.status(400).json({ msg: "se requiere datos" });
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: "Error " });
