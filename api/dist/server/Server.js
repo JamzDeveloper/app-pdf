@@ -10,6 +10,7 @@ var persona_1 = __importDefault(require("../routes/persona"));
 var users_1 = __importDefault(require("../routes/users"));
 var investigation_1 = __importDefault(require("../routes/investigation"));
 var files_1 = __importDefault(require("../routes/files"));
+var comments_1 = __importDefault(require("../routes/comments"));
 var Server = /** @class */ (function () {
     function Server() {
         this.apiPaths = {
@@ -17,10 +18,11 @@ var Server = /** @class */ (function () {
             persons: "/api/personas",
             users: "/api/usuarios",
             investigation: "/api/investigacion",
-            documents: "/api/file"
+            documents: "/api/file",
+            comment: "/api/comentario"
         };
         this.app = (0, express_1["default"])();
-        this.port = process.env.PORT || '8000';
+        this.port = process.env.PORT || "8000";
         this.middleware();
         this.routes();
     }
@@ -35,6 +37,7 @@ var Server = /** @class */ (function () {
         this.app.use(this.apiPaths.users, users_1["default"]);
         this.app.use(this.apiPaths.investigation, investigation_1["default"]);
         this.app.use(this.apiPaths.documents, files_1["default"]);
+        this.app.use(this.apiPaths.comment, comments_1["default"]);
     };
     Server.prototype.listen = function () {
         var _this = this;

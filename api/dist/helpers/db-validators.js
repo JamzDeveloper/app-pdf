@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.existsAsesor = exports.existsInvestigator = exports.existsRole = exports.existsPerson = void 0;
+exports.validPerson = exports.existsInvestigation = exports.existsAsesor = exports.existsInvestigator = exports.existsRole = exports.existsPerson = void 0;
 var pool = require("../mysql/database");
 var existsPerson = function (dni) { return __awaiter(void 0, void 0, void 0, function () {
     var dataPerson;
@@ -102,4 +102,34 @@ var existsAsesor = function (idAsesor) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.existsAsesor = existsAsesor;
+var existsInvestigation = function (idInvestigacion) { return __awaiter(void 0, void 0, void 0, function () {
+    var dataInvestigation;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, pool.query("SELECT * FROM investigacion WHERE id_investigacion=" + idInvestigacion)];
+            case 1:
+                dataInvestigation = _a.sent();
+                if ((dataInvestigation === null || dataInvestigation === void 0 ? void 0 : dataInvestigation.length) === 0) {
+                    throw new Error("La investigacion no existe");
+                }
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.existsInvestigation = existsInvestigation;
+var validPerson = function (idPerson) { return __awaiter(void 0, void 0, void 0, function () {
+    var dataPerson;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, pool.query("SELECT * FROM persona WHERE id_persona=" + idPerson)];
+            case 1:
+                dataPerson = _a.sent();
+                if ((dataPerson === null || dataPerson === void 0 ? void 0 : dataPerson.length) === 0) {
+                    throw new Error("La persona no existe");
+                }
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.validPerson = validPerson;
 //# sourceMappingURL=db-validators.js.map

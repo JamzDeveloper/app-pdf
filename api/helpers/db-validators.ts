@@ -35,3 +35,21 @@ export const existsAsesor = async (idAsesor: number) => {
     throw new Error("El asesor no existe");
   }
 };
+
+export const existsInvestigation = async (idInvestigacion: number) => {
+  const dataInvestigation = await pool.query(
+    `SELECT * FROM investigacion WHERE id_investigacion=${idInvestigacion}`
+  );
+  if (dataInvestigation?.length === 0) {
+    throw new Error("La investigacion no existe");
+  }
+};
+
+export const validPerson = async (idPerson: number) => {
+  const dataPerson = await pool.query(
+    `SELECT * FROM persona WHERE id_persona=${idPerson}`
+  );
+  if (dataPerson?.length === 0) {
+    throw new Error("La persona no existe");
+  }
+};
