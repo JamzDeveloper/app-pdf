@@ -75,11 +75,11 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
 }); };
 exports.getUsers = getUsers;
 var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, nombre, apellido, dni, telefono, direccion, correo, foto, fecha_nacimiento, clave, tipo_cuenta, profesion, carrera, facultad, salt, hash, newUser, dataUser, tipoCuentaAsesor, newCuentaAsesor, cuenta, newAsesor, dataUser, tipoCuentaInvestigador, newCuentaInvestigador, newInvestigador, dataUser, tipoCuentaAdmin, newCuentaAdmin, err_1;
+    var _a, nombre, apellido, dni, telefono, direccion, correo, foto, clave, tipo_cuenta, profesion, carrera, facultad, salt, hash, newUser, dataUser, tipoCuentaAsesor, newCuentaAsesor, cuenta, newAsesor, dataUser, tipoCuentaInvestigador, newCuentaInvestigador, newInvestigador, dataUser, tipoCuentaAdmin, newCuentaAdmin, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, nombre = _a.nombre, apellido = _a.apellido, dni = _a.dni, telefono = _a.telefono, direccion = _a.direccion, correo = _a.correo, foto = _a.foto, fecha_nacimiento = _a.fecha_nacimiento, clave = _a.clave, tipo_cuenta = _a.tipo_cuenta, profesion = _a.profesion, carrera = _a.carrera, facultad = _a.facultad;
+                _a = req.body, nombre = _a.nombre, apellido = _a.apellido, dni = _a.dni, telefono = _a.telefono, direccion = _a.direccion, correo = _a.correo, foto = _a.foto, clave = _a.clave, tipo_cuenta = _a.tipo_cuenta, profesion = _a.profesion, carrera = _a.carrera, facultad = _a.facultad;
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 16, , 17]);
@@ -92,8 +92,7 @@ var postUser = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                     telefono: telefono,
                     direccion: direccion,
                     correo: correo,
-                    foto: foto,
-                    fecha_nacimiento: fecha_nacimiento
+                    foto: foto
                 };
                 if (!(tipo_cuenta.toUpperCase() === "ASESOR")) return [3 /*break*/, 6];
                 if (!profesion) {

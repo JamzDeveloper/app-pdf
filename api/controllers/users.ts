@@ -39,7 +39,7 @@ export const postUser = async (req: Request, res: Response) => {
     direccion,
     correo,
     foto,
-    fecha_nacimiento,
+
     clave,
     tipo_cuenta,
     profesion,
@@ -60,7 +60,6 @@ export const postUser = async (req: Request, res: Response) => {
       direccion,
       correo,
       foto,
-      fecha_nacimiento,
     };
 
     if (tipo_cuenta.toUpperCase() === "ASESOR") {
@@ -161,7 +160,7 @@ export const getInvestigators = async (req: Request, res: Response) => {
           from investigador as inv inner join persona as  pers
          on inv.id_persona=pers.id_persona;
          `);
- //   console.log(investigators);
+    //   console.log(investigators);
     res.json({
       rol: "Investigador",
       investigadores: investigators,
