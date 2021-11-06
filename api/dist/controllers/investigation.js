@@ -59,10 +59,11 @@ var postInvestigation = function (req, res) { return __awaiter(void 0, void 0, v
                         })];
                 }
                 url_archivo = req.body.document;
-                //console.log("url_archivo:", url_archivo);
+                console.log("url_archivo:", url_archivo);
+                url_archivo = url_archivo.substring(0, url_archivo.length - 4);
+                console.log(url_archivo);
                 return [4 /*yield*/, fs_1["default"].readFileSync(path_1["default"].join(__dirname, "../documents/" + ((_b = req.file) === null || _b === void 0 ? void 0 : _b.filename)))];
             case 2:
-                //console.log("url_archivo:", url_archivo);
                 _c.sent();
                 newInvestigation = {
                     id_investigador: id_investigador,

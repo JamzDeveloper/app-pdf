@@ -4,9 +4,10 @@ const diskstorage = multer.diskStorage({
   destination: path.join(__dirname, "../documents"),
 
   filename: (req, file, cb) => {
-    //console.log(file);
-    cb(null, Date.now() + "-document-" + file.originalname);
-    req.body.document = Date.now() + "-document-" + file.originalname;
+    console.log(file);
+    let extension = Date.now() + "-document-" + file.originalname;
+    cb(null, extension);
+    req.body.document = extension;
   },
 });
 

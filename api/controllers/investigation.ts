@@ -25,7 +25,10 @@ export const postInvestigation = async (req: Request, res: Response) => {
       });
     }
     url_archivo = req.body.document;
-    //console.log("url_archivo:", url_archivo);
+    console.log("url_archivo:", url_archivo);
+
+ url_archivo =  url_archivo.substring(0,  url_archivo.length - 4);
+console.log(url_archivo);
     await fs.readFileSync(
       path.join(__dirname, "../documents/" + req.file?.filename)
     );

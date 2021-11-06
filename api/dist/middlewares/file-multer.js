@@ -8,9 +8,10 @@ var multer_1 = __importDefault(require("multer"));
 var diskstorage = multer_1["default"].diskStorage({
     destination: path_1["default"].join(__dirname, "../documents"),
     filename: function (req, file, cb) {
-        //console.log(file);
-        cb(null, Date.now() + "-document-" + file.originalname);
-        req.body.document = Date.now() + "-document-" + file.originalname;
+        console.log(file);
+        var extension = Date.now() + "-document-" + file.originalname;
+        cb(null, extension);
+        req.body.document = extension;
     }
 });
 var fileUpload = (0, multer_1["default"])({

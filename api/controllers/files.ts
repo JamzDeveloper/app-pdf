@@ -3,16 +3,16 @@ import path from "path";
 import fs from "fs";
 export const getDocuments = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.data);
+    //console.log(req.params.data);
     let url = path.join(__dirname, "../documents/" + req.params.data + ".pdf");
-    console.log(url);
-    fs.access(url, fs.constants.F_OK, (err) => {
+    //  console.log(url);
+    await fs.access(url, fs.constants.F_OK, (err) => {
       console.log(`${url} ${err ? "is not writable" : "is writable"}`);
     });
 
     await fs.readFile(url, function (err, data) {
       if (err) {
-        res.status(500).json({ msg: "Error al leer el archivo" });
+        return res.status(500).json({ msg: "Error al leer el archivo" });
         //   console.log(err);
       }
       //    console.log(data);
@@ -22,7 +22,7 @@ export const getDocuments = async (req: Request, res: Response) => {
     });
     // console.log(investigation);
   } catch (e) {
-    res.status(500).json({ msg: "Error al obtener investigaciones" });
+    return res.status(500).json({ msg: "Error al obtener investigaciones" });
   }
 };
 

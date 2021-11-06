@@ -47,16 +47,18 @@ var getDocuments = function (req, res) { return __awaiter(void 0, void 0, void 0
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                console.log(req.params.data);
+                _a.trys.push([0, 3, , 4]);
                 url_1 = path_1["default"].join(__dirname, "../documents/" + req.params.data + ".pdf");
-                console.log(url_1);
-                fs_1["default"].access(url_1, fs_1["default"].constants.F_OK, function (err) {
-                    console.log(url_1 + " " + (err ? "is not writable" : "is writable"));
-                });
+                //  console.log(url);
+                return [4 /*yield*/, fs_1["default"].access(url_1, fs_1["default"].constants.F_OK, function (err) {
+                        console.log(url_1 + " " + (err ? "is not writable" : "is writable"));
+                    })];
+            case 1:
+                //  console.log(url);
+                _a.sent();
                 return [4 /*yield*/, fs_1["default"].readFile(url_1, function (err, data) {
                         if (err) {
-                            res.status(500).json({ msg: "Error al leer el archivo" });
+                            return res.status(500).json({ msg: "Error al leer el archivo" });
                             //   console.log(err);
                         }
                         //    console.log(data);
@@ -64,14 +66,13 @@ var getDocuments = function (req, res) { return __awaiter(void 0, void 0, void 0
                         res.write(data);
                         return res.end();
                     })];
-            case 1:
-                _a.sent();
-                return [3 /*break*/, 3];
             case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
                 e_1 = _a.sent();
-                res.status(500).json({ msg: "Error al obtener investigaciones" });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [2 /*return*/, res.status(500).json({ msg: "Error al obtener investigaciones" })];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
