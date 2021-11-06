@@ -1,5 +1,0 @@
-cuando  el archivo se sube por primera vez la taba detalle_investigador
-en el capo estado sera por revisar y cuando se revice y agregue el avance el estado para a revisado
-cuando se actuzada s epondra por revisar
-
-para agregar el ascesor se buscara por dni
