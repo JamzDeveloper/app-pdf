@@ -27,8 +27,8 @@ export const postInvestigation = async (req: Request, res: Response) => {
     url_archivo = req.body.document;
     console.log("url_archivo:", url_archivo);
 
- url_archivo =  url_archivo.substring(0,  url_archivo.length - 4);
-console.log(url_archivo);
+    url_archivo = url_archivo.substring(0, url_archivo.length - 4);
+    console.log(url_archivo);
     await fs.readFileSync(
       path.join(__dirname, "../documents/" + req.file?.filename)
     );
@@ -108,6 +108,43 @@ export const getInvestigations = async (req: Request, res: Response) => {
                 ON P2.id_persona = A.id_persona`
       );
       return res.json({ investigacion });
+    }
+    res.status(400).json({ msg: "se requiere datos" });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: "Error " });
+  }
+};
+
+export const putInvestigations = async (req: Request, res: Response) => {
+  let { id_investigacion, url_archivo, titulo, descripcion } = req.body;
+  try {
+    if (id_investigacion) {
+      console.log("id_investigacion", id_investigacion);
+      const investigation = await pool.query(
+        `SELECT * FROM   investigacion where id_investigacion=${id_investigacion}  `
+      );
+      if (investigation.length > 0) {
+        if (req.file) {
+          let directory = path.join(
+            __dirname,
+            "../documents/" + investigation[0].url_archivo + ".pdf"
+          );
+          console.log("url_archivo:", url_archivo);
+          fs.unlinkSync(directory);
+          url_archivo = req.body.document;
+
+          url_archivo = url_archivo.substring(0, url_archivo.length - 4);
+        } else {
+          url_archivo = investigation[0].url_archivo;
+        }
+
+        const investigacion = await pool.query(
+          `UPDATE investigacion SET url_archivo = '${url_archivo}', titulo = '${titulo}', descripcion = '${descripcion}' WHERE id_investigacion = ${id_investigacion}`
+        );
+
+        return res.json({ investigacion });
+      }
     }
     res.status(400).json({ msg: "se requiere datos" });
   } catch (e) {

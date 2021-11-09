@@ -6,6 +6,7 @@ import fileUpload from "../middlewares/file-multer";
 import {
   postInvestigation,
   getInvestigations,
+  putInvestigations,
 } from "../controllers/investigation";
 
 const router = Router();
@@ -25,7 +26,8 @@ router.post(
 );
 
 router.get("/", getInvestigations);
-//router.put("/",  fileUpload,)
+
+router.put("/", fileUpload, putInvestigations);
 export default router;
 /* 
     url_archivo,
