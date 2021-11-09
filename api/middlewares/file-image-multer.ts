@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     let extension = Date.now() + "-image-" + file.originalname;
     cb(null, extension);
 
-    req.body.avatar = `images/${extension}`;
+    req.body.avatar = `${extension}`;
   },
 });
 const uploadImage = multer({
@@ -21,7 +21,7 @@ const uploadImage = multer({
     if (mimetype) {
       cb(null, true);
     } else {
-      req.body.avatar = "";
+      req.body.avatar = null;
       cb(null, false);
     }
   },

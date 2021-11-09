@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import bcrypt from "bcryptjs";
+import bcrypt, { compareSync } from "bcryptjs";
 const pool = require("../mysql/database");
+import path from "path";
+import fs from "fs";
 export const getUsers = async (req: Request, res: Response) => {
   try {
     const investigators = await pool.query(`select *
@@ -67,6 +69,13 @@ export const postUser = async (req: Request, res: Response) => {
 
     if (tipo_cuenta.toUpperCase() === "ASESOR") {
       if (!profesion) {
+        if (req.body.avatar) {
+          let directory = path.join(
+            __dirname,
+            "../public/images/" + req.body.avatar
+          );
+          fs.unlinkSync(directory);
+        }
         return res.status(409).json({ msg: "profesión no especificada" });
       }
       const dataUser = await pool.query("INSERT INTO persona set ?", [newUser]);
@@ -101,7 +110,16 @@ export const postUser = async (req: Request, res: Response) => {
     }
 
     if (tipo_cuenta.toUpperCase() === "INVESTIGADOR") {
+      console.log("llego a investigador");
+      console.log("carrera:", carrera, "facultad:", facultad);
       if (!facultad || !carrera) {
+        if (req.body.avatar) {
+          let directory = path.join(
+            __dirname,
+            "../public/images/" + req.body.avatar
+          );
+          fs.unlinkSync(directory);
+        }
         return res.status(400).json({
           msg: "se requiere datos del investigador",
         });
