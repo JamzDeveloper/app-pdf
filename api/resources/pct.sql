@@ -1,3 +1,5 @@
+create database pct;
+ use pct;
 CREATE TABLE persona(
 	id_persona INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	nombre VARCHAR(60) NOT NULL ,
@@ -7,7 +9,7 @@ CREATE TABLE persona(
     direccion VARCHAR(45),
     correo VARCHAR(45),
     foto VARCHAR(200),
-  
+    fecha_nacimiento TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE investigador(
@@ -25,17 +27,21 @@ CREATE TABLE asesor(
     CONSTRAINT fk_asesor_persona FOREIGN KEY(id_persona) REFERENCES persona(id_persona)
 );
 
-
+CREATE TABLE archivo (
+  id_archivo INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  archivo_binario blob NOT NULL,
+  archivo_nombre VARCHAR(255) NOT NULL DEFAULT '',
+  archivo_peso VARCHAR(15) NOT NULL DEFAULT '',
+  archivo_tipo VARCHAR(25) NOT NULL DEFAULT ''
+);
 
 CREATE TABLE investigacion(
   id_investigacion INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT, 
   id_investigador INTEGER NOT NULL,
- url_archivo VARCHAR(100) NOT NULL,
   titulo VARCHAR(60) NOT NULL,
   descripcion VARCHAR(250) NOT NULL,
   fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_investigacion_investigador FOREIGN KEY(id_investigador) REFERENCES investigador(id_investigador),
-
+  CONSTRAINT fk_investigacion_investigador FOREIGN KEY(id_investigador) REFERENCES investigador(id_investigador)
 
 );
 

@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+import path from "path";
 import cors from "cors";
 import login from "../routes/auth";
 import persons from "../routes/persona";
@@ -28,6 +29,8 @@ class Server {
   middleware() {
     this.app.use(cors());
     this.app.use(express.json());
+
+    this.app.use(express.static(path.join(__dirname, "../public")));
     this.app.use(express.static("public"));
   }
 

@@ -7,7 +7,7 @@ import {
   getAdvisors,
   getAdmin,
 } from "../controllers/users";
-
+import uploadImage from "../middlewares/file-image-multer";
 import { existsPerson, existsRole } from "../helpers/db-validators";
 import { validateFields } from "../middlewares/validate-fields";
 
@@ -21,6 +21,7 @@ router.get("/admin", getAdmin);
 //router.get("/:id");/*
 router.post(
   "/",
+  uploadImage,
   [
     check("tipo_cuenta").custom(existsRole),
     check("nombre", "se requiere un nombre").not().isEmpty(),

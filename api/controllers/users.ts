@@ -31,7 +31,7 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 export const postUser = async (req: Request, res: Response) => {
-  const {
+  let {
     nombre,
     apellido,
     dni,
@@ -39,7 +39,6 @@ export const postUser = async (req: Request, res: Response) => {
     direccion,
     correo,
     foto,
-
     clave,
     tipo_cuenta,
     profesion,
@@ -48,6 +47,10 @@ export const postUser = async (req: Request, res: Response) => {
   } = req.body;
 
   try {
+    foto =
+      req.body.avatar == "undefined" || req.body.avatar == "null"
+        ? ""
+        : req.body.avatar;
     // cifrado de contraseña
     const salt = bcrypt.genSaltSync(10);
     // console.log(salt);
