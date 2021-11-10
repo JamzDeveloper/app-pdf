@@ -226,3 +226,15 @@ export const getAdmin = async (req: Request, res: Response) => {
     });
   }
 };
+export const putUser = async (req: Request, res: Response) => {
+  const { id_persona, id_investigador, id_asesor } = req.body;
+  try {
+    res.status(500).json({
+      msg: "en construccion",
+    });
+  } catch (e) {
+    res.status(500).json({
+      msg: "error en la peticion",
+    });
+  }
+};

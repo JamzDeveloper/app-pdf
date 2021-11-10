@@ -27,15 +27,16 @@ export const login = async (req: Request, res: Response) => {
       `SELECT * from investigador where id_persona=${persona[0].id_persona}`
     );
     if (rol.length > 0) {
-      res.json({ persona, rol });
+      return res.json({ persona, rol });
     } else {
       const rol = await pool.query(
         `SELECT * from asesor  where id_persona=${persona[0].id_persona}`
       );
       if (rol.length > 0) {
-        res.json({ persona, rol });
+        return res.json({ persona, rol });
       }
     }
+    res.json({ persona, rol: "administrador" });
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: "No se pudo autentificar" });

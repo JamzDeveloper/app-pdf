@@ -2,21 +2,21 @@ import express, { Application } from "express";
 import path from "path";
 import cors from "cors";
 import login from "../routes/auth";
-import persons from "../routes/persona";
 import users from "../routes/users";
 import investigation from "../routes/investigation";
 import documents from "../routes/files";
 import commnets from "../routes/comments";
+import cites from "../routes/cites";
 class Server {
   private app: Application;
   private port: string;
   private apiPaths = {
     login: "/api/login",
-    persons: "/api/personas",
     users: "/api/usuarios",
     investigation: "/api/investigacion",
     documents: "/api/file",
     comment: "/api/comentario",
+    cites: "/api/cita",
   };
 
   constructor() {
@@ -36,11 +36,11 @@ class Server {
 
   routes() {
     this.app.use(this.apiPaths.login, login);
-    this.app.use(this.apiPaths.persons, persons);
     this.app.use(this.apiPaths.users, users);
     this.app.use(this.apiPaths.investigation, investigation);
     this.app.use(this.apiPaths.documents, documents);
     this.app.use(this.apiPaths.comment, commnets);
+    this.app.use(this.apiPaths.cites, cites);
   }
 
   listen() {

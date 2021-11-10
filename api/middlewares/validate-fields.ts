@@ -16,8 +16,7 @@ export const validateFields = (
       fs.unlinkSync(directory);
     }
 
-    if (req.body.avatar != "undefined") {
-   
+    if (req.body.avatar != "undefined" && req.body.document) {
       let directory = path.join(
         __dirname,
         "../public/images/" + req.body.avatar
