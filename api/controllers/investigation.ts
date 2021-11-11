@@ -124,7 +124,7 @@ export const putArchivo64 = async (req: Request, res: Response) => {
         __dirname + "/1636481213106-document-prueba.pdf"
       );
 */
-      let extension = Date.now() + "-document-" + `${tituloInvestigacion}`;
+      let extension = Date.now() + "-document-" + `${tituloInvestigacion}archivo`;
       let directory = path.join(__dirname, `../documents/${extension}`);
 
       fs.writeFile(
