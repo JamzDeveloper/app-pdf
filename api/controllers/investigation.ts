@@ -107,6 +107,19 @@ export const putArchivo64 = async (req: Request, res: Response) => {
     );
     if (investigation.length > 0) {
       const tituloInvestigacion = investigation[0].titulo;
+      if (
+        investigation[0].url_archivo !== "" &&
+        investigation[0].url_archivo !== null &&
+        investigation[0].url_archivo !== undefined
+      ) {
+      //  console.log("si se encuentra un archivo", investigation[0].url_archivo);
+        let directory = path.join(
+          __dirname,
+          "../documents/" + investigation[0].url_archivo + ".pdf"
+        );
+
+        fs.unlinkSync(directory);
+      }
       /* let encodedPdf = base64.base64Encode(
         __dirname + "/1636481213106-document-prueba.pdf"
       );
