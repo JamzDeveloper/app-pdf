@@ -42,6 +42,7 @@ CREATE TABLE comentario(
     id_investigacion INTEGER NOT NULL,
     id_persona INTEGER NOT NULL,
     comentario VARCHAR(250),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_comentario_investigacion FOREIGN KEY(id_investigacion) REFERENCES investigacion(id_investigacion),
     CONSTRAINT fk_comentario_persona FOREIGN KEY(id_persona) REFERENCES persona(id_persona)
 );
