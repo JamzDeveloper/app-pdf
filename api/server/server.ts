@@ -27,14 +27,15 @@ class Server {
   }
 
   middleware() {
+    
     this.app.use(cors());
     this.app.use(express.json());
-
     this.app.use(express.static(path.join(__dirname, "../public")));
     this.app.use(express.static("public"));
   }
 
   routes() {
+    
     this.app.use(this.apiPaths.login, login);
     this.app.use(this.apiPaths.users, users);
     this.app.use(this.apiPaths.investigation, investigation);

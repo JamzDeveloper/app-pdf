@@ -9,6 +9,7 @@ import {
   putInvestigations,
   putDetalleInvestigacion,
   putArchivo,
+  putArchivo64
 } from "../controllers/investigation";
 
 const router = Router();
@@ -27,6 +28,7 @@ router.post(
   postInvestigation
 );
 router.put("/archivo/:id_investigacion", fileUpload,putArchivo);
+router.put("/archivo64/:id_investigacion",putArchivo64);
 router.get("/", getInvestigations);
 
 router.put("/", fileUpload, putInvestigations);

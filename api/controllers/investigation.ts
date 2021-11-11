@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import path from "path";
 import fs from "fs";
 const pool = require("../mysql/database");
-
+const base64 = require("base64topdf");
 export const postInvestigation = async (req: Request, res: Response) => {
   let {
     id_investigador,
@@ -66,7 +66,7 @@ export const putArchivo = async (req: Request, res: Response) => {
   try {
     const { id_investigacion } = req.params;
 
-   // console.log("id_investigacion:", req);
+    // console.log("id_investigacion:", req);
     if (!req.file) {
       return res.status(400).json({
         msg: "Solo se aceptan archivos pdf",
@@ -97,6 +97,45 @@ export const putArchivo = async (req: Request, res: Response) => {
   }
 };
 
+export const putArchivo64 = async (req: Request, res: Response) => {
+  const { id_investigacion } = req.params;
+  const { documents } = req.body;
+  //console.log("documents:", documents);
+  try {
+    const investigation = await pool.query(
+      `select * from investigacion where id_investigacion=${id_investigacion}`
+    );
+    if (investigation.length > 0) {
+      const tituloInvestigacion = investigation[0].titulo;
+      /* let encodedPdf = base64.base64Encode(
+        __dirname + "/1636481213106-document-prueba.pdf"
+      );
+*/
+      let extension = Date.now() + "-document-" + `${tituloInvestigacion}`;
+      let directory = path.join(__dirname, `../documents/${extension}`);
+
+      fs.writeFile(
+        `${directory}.pdf`,
+        documents,
+        { encoding: "base64" },
+        function (err) {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({ msg: "Error al guardar el archivo" });
+          }
+        }
+      );
+      console.log("archivo guardado");
+      await pool.query(`UPDATE investigacion SET url_archivo = '${extension}' 
+      WHERE id_investigacion = ${id_investigacion}`);
+      return res.json({ msg: "archivo actualizado" });
+    }
+    return res.json({ msg: "no se pudo actualizar" });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: "Error al guardar el archivo" });
+  }
+};
 export const getInvestigations = async (req: Request, res: Response) => {
   const { id_investigador, id_asesor, id_admin } = req.query;
   //console.log(req.body);
