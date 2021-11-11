@@ -7,6 +7,7 @@ import {
   postInvestigation,
   getInvestigations,
   putInvestigations,
+  putDetalleInvestigacion,
 } from "../controllers/investigation";
 
 const router = Router();
@@ -28,6 +29,7 @@ router.post(
 router.get("/", getInvestigations);
 
 router.put("/", fileUpload, putInvestigations);
+router.put("/detalle", putDetalleInvestigacion);
 export default router;
 /* 
     url_archivo,

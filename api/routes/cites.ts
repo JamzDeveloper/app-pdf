@@ -13,4 +13,5 @@ router.put(
   [check("id_investigacion").custom(existsInvestigation), validateFields],
   putCites
 );
+//router.delete("/");
 export default router;

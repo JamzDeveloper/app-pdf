@@ -152,3 +152,32 @@ export const putInvestigations = async (req: Request, res: Response) => {
     res.status(500).json({ msg: "Error " });
   }
 };
+
+export const putDetalleInvestigacion = async (req: Request, res: Response) => {
+  let { id_investigacion, estado, avance } = req.body;
+ // console.log("id_investigacion", id_investigacion);
+ try {
+    if(avance>100){
+     return res.status(400).json({ msg: "el avance no puede ser mayor a 100" });
+   }
+    if (id_investigacion && estado && avance) {
+      //console.log("id_detalle_investigacion", id_investigacion);
+
+      const detalleInvestigation = await pool.query(
+        `SELECT * FROM   detalle_investigacion where id_investigacion=${id_investigacion}  `
+      );
+
+      if (detalleInvestigation.length > 0) {
+        const investigacion = await pool.query(
+          `UPDATE detalle_investigacion SET estado = '${estado}', avance = '${avance}' WHERE id_investigacion = ${id_investigacion}`
+        );
+
+        return res.json({msg:"detalles de investigación actualizado", investigacion });
+      }
+    }
+    res.status(400).json({ msg: "se requiere datos" });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: "Error " });
+  }
+};

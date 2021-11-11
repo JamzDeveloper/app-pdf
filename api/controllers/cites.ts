@@ -66,8 +66,6 @@ export const putCites = async (req: Request, res: Response) => {
       hora &&
       link
     ) {
-
-        
       const cite = await pool.query(
         `SELECT * from cita where id_cita=${id_cita}`
       );
@@ -82,7 +80,7 @@ export const putCites = async (req: Request, res: Response) => {
                 link='${link}'
                 WHERE id_cita =${id_cita}`);
 
-     //   console.log(req.body, "cita", cite);
+        //   console.log(req.body, "cita", cite);
         res.json({ msg: "Cita actualizada", cite });
       } else {
         res.status(401).json({ msg: "Cita no existe" });
