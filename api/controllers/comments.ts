@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 const pool = require("../mysql/database");
 export const postComments = async (req: Request, res: Response) => {
-  console.log(req);
+ // console.log(req);
   const { id_investigacion, id_persona, comentario, fecha } = req.body;
   if (!comentario) {
     return res.status(400).json({
