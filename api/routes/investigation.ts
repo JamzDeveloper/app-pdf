@@ -8,6 +8,7 @@ import {
   getInvestigations,
   putInvestigations,
   putDetalleInvestigacion,
+  putArchivo,
 } from "../controllers/investigation";
 
 const router = Router();
@@ -25,7 +26,7 @@ router.post(
   ],
   postInvestigation
 );
-
+router.put("/archivo/:id_investigacion", fileUpload,putArchivo);
 router.get("/", getInvestigations);
 
 router.put("/", fileUpload, putInvestigations);

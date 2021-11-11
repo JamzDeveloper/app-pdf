@@ -62,6 +62,40 @@ export const postInvestigation = async (req: Request, res: Response) => {
     res.status(500).json({ msg: "Error al crear investigacion" });
   }
 };
+export const putArchivo = async (req: Request, res: Response) => {
+  try {
+    const { id_investigacion } = req.params;
+
+   // console.log("id_investigacion:", req);
+    if (!req.file) {
+      return res.status(400).json({
+        msg: "Solo se aceptan archivos pdf",
+      });
+    }
+    let url_archivo = req.body.document;
+
+    url_archivo = url_archivo.substring(0, url_archivo.length - 4);
+    const investigation = await pool.query(
+      `SELECT * FROM investigacion WHERE id_investigacion = ${id_investigacion}`
+    );
+    if (investigation.length > 0) {
+      await pool.query(
+        `UPDATE investigacion SET url_archivo = '${url_archivo}' 
+          WHERE id_investigacion = ${id_investigacion}`
+      );
+      return res.json({ msg: "archivo actualizado", investigation });
+    } else {
+      let directory = path.join(__dirname, "../documents/" + req.body.document);
+      fs.unlinkSync(directory);
+      return res.status(404).json({ msg: "investigacion no encontrada" });
+    }
+  } catch (e) {
+    console.log(e);
+    let directory = path.join(__dirname, "../documents/" + req.body.document);
+    fs.unlinkSync(directory);
+    res.status(500).json({ msg: "Error al guardar el archivo" });
+  }
+};
 
 export const getInvestigations = async (req: Request, res: Response) => {
   const { id_investigador, id_asesor, id_admin } = req.query;
@@ -155,11 +189,13 @@ export const putInvestigations = async (req: Request, res: Response) => {
 
 export const putDetalleInvestigacion = async (req: Request, res: Response) => {
   let { id_investigacion, estado, avance } = req.body;
- // console.log("id_investigacion", id_investigacion);
- try {
-    if(avance>100){
-     return res.status(400).json({ msg: "el avance no puede ser mayor a 100" });
-   }
+  // console.log("id_investigacion", id_investigacion);
+  try {
+    if (avance > 100) {
+      return res
+        .status(400)
+        .json({ msg: "el avance no puede ser mayor a 100" });
+    }
     if (id_investigacion && estado && avance) {
       //console.log("id_detalle_investigacion", id_investigacion);
 
@@ -172,7 +208,10 @@ export const putDetalleInvestigacion = async (req: Request, res: Response) => {
           `UPDATE detalle_investigacion SET estado = '${estado}', avance = '${avance}' WHERE id_investigacion = ${id_investigacion}`
         );
 
-        return res.json({msg:"detalles de investigación actualizado", investigacion });
+        return res.json({
+          msg: "detalles de investigación actualizado",
+          investigacion,
+        });
       }
     }
     res.status(400).json({ msg: "se requiere datos" });
