@@ -6,6 +6,7 @@ import {
   getInvestigators,
   getAdvisors,
   getAdmin,
+  putPerson
 } from "../controllers/users";
 import uploadImage from "../middlewares/file-image-multer";
 import { existsPerson, existsRole } from "../helpers/db-validators";
@@ -35,7 +36,7 @@ router.post(
   ],
   postUser
 );
+router.put("/:id_persona",putPerson);
 /*router.delete("/");
-router.put("/");
 */
 export default router;

@@ -226,12 +226,44 @@ export const getAdmin = async (req: Request, res: Response) => {
     });
   }
 };
-export const putUser = async (req: Request, res: Response) => {
-  const { id_persona, id_investigador, id_asesor } = req.body;
-  try {
-    res.status(500).json({
-      msg: "en construccion",
+export const putPerson = async (req: Request, res: Response) => {
+  const { id_persona } = req.params;
+  const { nombre, apellido, telefono, correo, direccion } = req.body;
+
+  if (!nombre || !apellido || !telefono || !correo || !direccion) {
+    return res.status(400).json({
+      msg: "datos incompletos",
     });
+  }
+  const newPerson = {
+    nombre,
+    apellido,
+    telefono,
+    direccion,
+    correo,
+  };
+  try {
+    if (id_persona) {
+      const person = await pool.query(
+        `select * from persona where id_persona=?`,
+        [id_persona]
+      );
+      if (person.length > 0) {
+        await pool.query(`update persona set ? where id_persona=?`, [
+          newPerson,
+          id_persona,
+        ]);
+        return res.json({ msg: "datos actualizados" });
+      } else {
+        return res.status(400).json({
+          msg: "no existe la persona",
+        });
+      }
+    } else {
+      return res.status(400).json({
+        msg: "datos incompletos",
+      });
+    }
   } catch (e) {
     res.status(500).json({
       msg: "error en la peticion",
