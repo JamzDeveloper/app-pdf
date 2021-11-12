@@ -7,6 +7,7 @@ import investigation from "../routes/investigation";
 import documents from "../routes/files";
 import commnets from "../routes/comments";
 import cites from "../routes/cites";
+const myParser = require("body-parser");
 class Server {
   private app: Application;
   private port: string;
@@ -27,15 +28,17 @@ class Server {
   }
 
   middleware() {
-    
     this.app.use(cors());
-    this.app.use(express.json());
     this.app.use(express.static(path.join(__dirname, "../public")));
     this.app.use(express.static("public"));
+  //  this.app.use(express.json());
+  this.app.use(myParser.json({limit: '200mb'}));
+  this.app.use(myParser.urlencoded({limit: '200mb', extended: true}));
+  //  this.app.use(myParser.text({ limit: "200mb" }));
+   // this.app.use(myParser.urlencoded({ limit: "200mb", extended: true }));
   }
 
   routes() {
-    
     this.app.use(this.apiPaths.login, login);
     this.app.use(this.apiPaths.users, users);
     this.app.use(this.apiPaths.investigation, investigation);
