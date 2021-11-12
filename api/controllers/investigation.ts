@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import path from "path";
 import fs from "fs";
 const pool = require("../mysql/database");
-const base64 = require("base64topdf");
 export const postInvestigation = async (req: Request, res: Response) => {
   let {
     id_investigador,
@@ -153,6 +152,10 @@ export const putArchivo64 = async (req: Request, res: Response) => {
       console.log("archivo guardado");
       await pool.query(`UPDATE investigacion SET url_archivo = '${extension}' 
       WHERE id_investigacion = ${id_investigacion}`);
+
+      await pool.query(`UPDATE detalle_investigacion 
+      SET estado = 'por revisar' WHERE id_investigacion = ${id_investigacion}`);
+
       return res.json({ msg: "archivo actualizado" });
     }
     return res.json({ msg: "no se pudo actualizar" });
