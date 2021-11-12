@@ -24,6 +24,17 @@ export const postInvestigation = async (req: Request, res: Response) => {
         msg: "Solo se aceptan archivos pdf",
       });
     }
+
+    const investigation = await pool.query(
+      `SELECT * from investigacion where id_investigacion=${id_investigador}`
+    );
+    if (investigation.length > 0) {
+      let directory = path.join(__dirname, "../documents/" + req.body.document);
+      fs.unlinkSync(directory);
+      return res.status(400).json({
+        msg: "Ya cuenta con una investigacion",
+      });
+    }
     url_archivo = req.body.document;
     console.log("url_archivo:", url_archivo);
 
@@ -112,7 +123,7 @@ export const putArchivo64 = async (req: Request, res: Response) => {
         investigation[0].url_archivo !== null &&
         investigation[0].url_archivo !== undefined
       ) {
-      //  console.log("si se encuentra un archivo", investigation[0].url_archivo);
+        //  console.log("si se encuentra un archivo", investigation[0].url_archivo);
         let directory = path.join(
           __dirname,
           "../documents/" + investigation[0].url_archivo + ".pdf"
@@ -124,7 +135,8 @@ export const putArchivo64 = async (req: Request, res: Response) => {
         __dirname + "/1636481213106-document-prueba.pdf"
       );
 */
-      let extension = Date.now() + "-document-" + `${tituloInvestigacion}archivo`;
+      let extension =
+        Date.now() + "-document-" + `${tituloInvestigacion}archivo`;
       let directory = path.join(__dirname, `../documents/${extension}`);
 
       fs.writeFile(
