@@ -170,7 +170,7 @@ export const getInvestigations = async (req: Request, res: Response) => {
   try {
     if (id_investigador) {
       const investigacion = await pool.query(
-        `select inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.avance,ase.id_asesor as 'id_rol',
+        `select inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.estado,dtinv.avance,ase.id_asesor as 'id_rol',
         per.nombre,per.apellido,per.foto, per.correo, per.telefono from investigacion inv 
         inner join detalle_investigacion as dtinv on 
             inv.id_investigacion=dtinv.id_investigacion
@@ -182,7 +182,7 @@ export const getInvestigations = async (req: Request, res: Response) => {
     }
     if (id_asesor) {
       const investigacion = await pool.query(
-        `select  inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.avance,itg.id_investigador  as 'id_rol',
+        `select  inv.id_investigacion,inv.url_archivo,inv.titulo,inv.descripcion,inv.fecha_inicio,dtinv.estado,dtinv.avance,itg.id_investigador  as 'id_rol',
         per.nombre,per.apellido,per.foto, per.correo, per.telefono from investigacion inv 
         inner join detalle_investigacion as dtinv on 
             inv.id_investigacion = dtinv.id_investigacion
