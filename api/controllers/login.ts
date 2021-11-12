@@ -31,10 +31,8 @@ export const login = async (req: Request, res: Response) => {
         persona,
         rol: {
           tipo: "investigador",
-          id_persona: rol[0].id_persona,
-          id_investigador: rol[0].id_investigador,
-          carrera: rol[0].carrera,
-          facultad: rol[0].facultad,
+          id_rol: rol[0].id_investigador,
+ 
         },
       });
     } else {
@@ -46,9 +44,7 @@ export const login = async (req: Request, res: Response) => {
           persona,
           rol: {
             tipo: "asesor",
-            id_persona: rol[0].id_persona,
-            id_asesor: rol[0].id_asesor,
-            profesion: rol[0].profesion,
+            id_rol: rol[0].id_asesor
           },
         });
       }
