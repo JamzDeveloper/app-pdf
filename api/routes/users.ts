@@ -36,7 +36,7 @@ router.post(
   ],
   postUser
 );
-router.put("/:id_persona",putPerson);
+router.put("/",putPerson);
 /*router.delete("/");
 */
 export default router;

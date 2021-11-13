@@ -227,7 +227,7 @@ export const getAdmin = async (req: Request, res: Response) => {
   }
 };
 export const putPerson = async (req: Request, res: Response) => {
-  const { id_persona } = req.params;
+  const { id_persona } = req.body;
   const { nombre, apellido, telefono, correo, direccion } = req.body;
 
   if (!nombre || !apellido || !telefono || !correo || !direccion) {
